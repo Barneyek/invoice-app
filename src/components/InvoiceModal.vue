@@ -8,6 +8,7 @@
       class="invoice-content relative p-14  w-full bg-[#141625] text-white border-r border-white	"
       @submit.prevent="submitForm"
     >
+      <Loading v-show="loading"/>
       <h1 class="text-3xl font-bold mb-5 text-white">
         New Invoice
       </h1>
@@ -317,6 +318,7 @@
         <div class="save flex mt-16">
           <div class="left flex flex-1">
             <button
+              type="button"
               class="red py-4 px-6"
               @click="closeInvoice"
             >
@@ -325,12 +327,14 @@
           </div>
           <div class="right flex gap-3">
             <button
+              type="submit"
               class="dark-purple py-4 px-6"
               @click="saveDraft"
             >
               Save Draft
             </button>
             <button
+              type="button"
               class="purple py-4 px-6"
               @click="publishInvoice"
             >
@@ -347,11 +351,13 @@
 import db from '../firebase/firebaseInit'
 import { mapMutations } from "vuex"
 import { uid } from 'uid'
+import Loading from "./partials/Loading.vue"
 
 export default {
   name: "InvoiceModal",
   data () {
     return {
+      loading: null,
       dateOptions: {year: "numeric", month: "short", day: "numeric"},
       billerStreetAddress: null,
       billerCity: null,
@@ -374,6 +380,9 @@ export default {
       invoiceItemList: [],
       invoiceTotal: 0
     }
+  },
+  components: {
+    Loading,
   },
   watch: {
     paymentTerms () {
@@ -418,7 +427,10 @@ export default {
     async uploadInvoice () {
       if (this.invoiceItemList.length <= 0) {
         alert('Upewnij się, że wypełniłeś listę rzeczy')
+        return
       }
+
+      this.loading = true
       this.calInvoiceTotal()
 
       const dataBase = db.collection('invoices').doc()
@@ -445,7 +457,7 @@ export default {
         invoiceItemList: this.invoiceItemList,
         invoiceTotal: this.invoiceTotal,
       })
-
+      this.loading = false
       this.TOGGLE_INVOICE()
     },
     submitForm () {
