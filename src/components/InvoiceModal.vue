@@ -1,14 +1,14 @@
 <template>
   <div
     ref="invoiceWrap"
-    class="scrollbar flex flex-col fixed top-0 left-0 bg-transparent w-full h-screen overflow-scroll left-[90px] max-w-[700px] z-20"
+    class="scrollbar flex flex-col fixed top-0 left-0 bg-transparent w-full h-screen overflow-scroll left-[71px] z-20"
     @click="checkClick"
   >
     <form
-      class="invoice-content relative p-14  w-full bg-[#141625] text-white border-r border-white	"
+      class="relative p-14 w-full bg-[#141625] text-white border-r border-white  max-w-[700px]"
       @submit.prevent="submitForm"
     >
-      <Loading v-show="loading"/>
+      <Loading v-show="loading" />
       <h1 class="text-3xl font-bold mb-5 text-white">
         New Invoice
       </h1>
@@ -17,7 +17,10 @@
           Bill Form
         </h4>
         <div class="input mb-6 flex flex-col">
-          <label class="text-xs mb-1" for="billerStreetAddress">Street Address:</label>
+          <label
+            class="text-xs mb-1"
+            for="billerStreetAddress"
+          >Street Address:</label>
           <input
             id="billerStreetAddress"
             v-model="billerStreetAddress"
@@ -355,6 +358,9 @@ import Loading from "./partials/Loading.vue"
 
 export default {
   name: "InvoiceModal",
+  components: {
+    Loading,
+  },
   data () {
     return {
       loading: null,
@@ -381,9 +387,6 @@ export default {
       invoiceTotal: 0
     }
   },
-  components: {
-    Loading,
-  },
   watch: {
     paymentTerms () {
       const futureDate = new Date()
@@ -396,7 +399,12 @@ export default {
     this.invoiceDate = new Date(this.invoiceDateUnix).toLocaleDateString('pl-PL', this.dateOptions)
   },
   methods: {
-    ...mapMutations(['TOGGLE_INVOICE']),
+    ...mapMutations(['TOGGLE_INVOICE', 'TOGGLE_MODAL']),
+    checkClick (e) {
+      if (e.target === this.$refs.invoiceWrap) {
+        this.TOGGLE_MODAL()
+      }
+    },
     closeInvoice () {
       this.TOGGLE_INVOICE()
     },

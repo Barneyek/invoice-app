@@ -6,6 +6,7 @@
     >
       <Navigation />
       <div class="relative p-5 flex-1">
+        <Modal v-if="modalActive" />
         <transition name="invoice">
           <InvoiceModal v-if="invoiceModal" />
         </transition>
@@ -29,11 +30,13 @@
 import { mapState } from 'vuex'
 import Navigation from "./components/Navigation.vue"
 import InvoiceModal from "./components/InvoiceModal.vue"
+import Modal from "./components/partials/Modal.vue"
 
 export default {
   components: {
     Navigation,
-    InvoiceModal
+    InvoiceModal,
+    Modal
   },
   data () {
     return {
@@ -45,7 +48,7 @@ export default {
     window.addEventListener("resize", this.checkScreen)
   },
   computed: {
-    ...mapState(['invoiceModal'])
+    ...mapState(['invoiceModal', 'modalActive'])
   },
   methods: {
     checkScreen () {
