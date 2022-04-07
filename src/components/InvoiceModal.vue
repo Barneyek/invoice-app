@@ -1,11 +1,11 @@
 <template>
   <div
     ref="invoiceWrap"
-    class="scrollbar flex flex-col fixed top-0 left-0 bg-transparent	w-full h-screen overflow-scroll	left-[90px] max-w-[700px]"
+    class="scrollbar flex flex-col fixed top-0 left-0 bg-transparent w-full h-screen overflow-scroll left-[90px] max-w-[700px] z-20"
     @click="checkClick"
   >
     <form
-      class="invoice-content relative p-14  w-full bg-[#141625] text-white shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px]"
+      class="invoice-content relative p-14  w-full bg-[#141625] text-white border-r border-white	"
       @submit.prevent="submitForm"
     >
       <h1 class="text-3xl font-bold mb-5 text-white">
@@ -241,7 +241,6 @@
               v-model="productDescription"
               class="w-full bg-[#1e2139] text-white rounded border-0 py-3 px-1 focus:outline-0"
               type="text"
-              disabled
             >
           </div>
           <div class="work-items">
@@ -289,20 +288,20 @@
                     type="text"
                   >
                 </td>
-                <td class="total basis-[20%] items-center">
-                  {{ (item.total = item.qty * item.price) }}
+                <td class="total basis-[20%] flex items-center">
+                  ${{ (item.total = item.qty * item.price) }}
                 </td>
                 <img
                   src="../assets/icon-delete.svg"
                   alt="icon"
-                  class="absolute top-[15px] right-0 w-[12px] h-[16px]"
+                  class="absolute top-[15px] right-0 w-[12px] h-[16px] cursor-pointer"
                   @click="deleteInvoiceItem(item.id)"
                 >
               </tr>
             </table>
             <div
               class="flex items-center justify-center w-full button text-white bg-[#252945]"
-              @click="addNewInoviceItem"
+              @click="addNewInvoiceItem"
             >
               <img
                 src="../assets/icon-plus.svg"
@@ -345,7 +344,9 @@
 </template>
 
 <script>
+import db from '../firebase/firebaseInit'
 import { mapMutations } from "vuex"
+import { uid } from 'uid'
 
 export default {
   name: "InvoiceModal",
@@ -389,6 +390,66 @@ export default {
     ...mapMutations(['TOGGLE_INVOICE']),
     closeInvoice () {
       this.TOGGLE_INVOICE()
+    },
+    addNewInvoiceItem () {
+      this.invoiceItemList.push({
+        id: uid(),
+        itemName: "",
+        qty: "",
+        price: 0,
+        total: 0
+      })
+    },
+    deleteInvoiceItem (id) {
+      this.invoiceItemList = this.invoiceItemList.filter(item => item.id !== id)
+    },
+    calInvoiceTotal () {
+      this.invoiceTotal = 0
+      this.invoiceItemList.forEach(item => {
+        this.invoiceTotal += item.total
+      })
+    },
+    publishInvoice () {
+      this.invoicePending = true
+    },
+    saveDraft () {
+      this.invoiceDraft = true
+    },
+    async uploadInvoice () {
+      if (this.invoiceItemList.length <= 0) {
+        alert('Upewnij się, że wypełniłeś listę rzeczy')
+      }
+      this.calInvoiceTotal()
+
+      const dataBase = db.collection('invoices').doc()
+      await dataBase.set({
+        invoiceId: uid(6),
+        billerStreetAddress: this.billerStreetAddress,
+        billerCity: this.billerCity,
+        billerZipCode: this.billerZipCode,
+        billerCountry: this.billerCountry,
+        clientName: this.clientName,
+        clientEmail: this.clientEmail,
+        clientStreetAddress: this.clientStreetAddress,
+        clientCity: this.clientCity,
+        clientZipCode: this.clientZipCode,
+        clientCountry: this.clientCountry,
+        invoiceDateUnix: this.invoiceDateUnix,
+        invoiceDate: this.invoiceDate,
+        paymentTerms: this.paymentTerms,
+        paymentDueDateUnix: this.paymentDueDateUnix,
+        paymentDueDate: this.paymentDueDate,
+        productDescription: this.productDescription,
+        invoicePending: this.invoicePending,
+        invoiceDraft: this.invoiceDraft,
+        invoiceItemList: this.invoiceItemList,
+        invoiceTotal: this.invoiceTotal,
+      })
+
+      this.TOGGLE_INVOICE()
+    },
+    submitForm () {
+      this.uploadInvoice()
     }
   },
 }
