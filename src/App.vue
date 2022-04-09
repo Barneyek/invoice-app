@@ -1,5 +1,8 @@
 <template>
-  <div class="flex flex-col md:flex-row min-h-screen bg-[#141625]">
+  <div
+    v-if="invoicesLoaded"
+    class="flex flex-col md:flex-row min-h-screen bg-[#141625]"
+  >
     <div
       v-if="!mobile"
       class="flex w-full"
@@ -27,7 +30,7 @@
   </div>
 </template>
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import Navigation from "./components/Navigation.vue"
 import InvoiceModal from "./components/InvoiceModal.vue"
 import Modal from "./components/partials/Modal.vue"
@@ -44,13 +47,15 @@ export default {
     }
   },
   created () {
+    this.GET_INVOICES()
     this.checkScreen()
     window.addEventListener("resize", this.checkScreen)
   },
   computed: {
-    ...mapState(['invoiceModal', 'modalActive'])
+    ...mapState(['invoiceModal', 'modalActive', 'invoicesLoaded'])
   },
   methods: {
+    ...mapActions(['GET_INVOICES']),
     checkScreen () {
       const windowWidth = window.innerWidth
       if (windowWidth <= 750) {
