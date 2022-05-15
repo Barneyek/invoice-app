@@ -51,28 +51,57 @@
         </div>
       </div>
     </div>
+    <div v-if="invoiceData.length > 0">
+      <Invoice
+        v-for="(invoice, key) in invoiceData"
+        :key="key"
+        :invoice="invoice"
+      />
+    </div>
+    <div
+      v-else
+      class="flex flex-col items-center mt-16"
+    >
+      <img
+        alt="empty"
+        class="w-[214px] h-[200px]"
+        src="../assets/illustration-empty.svg"
+      >
+      <h3 class="text-2xl mt-5">
+        Brak faktur
+      </h3>
+      <p class="max-w-[260px] text-xs mt-1 text-center font-light">
+        Stwórz nową fakturę klikając w przycisk Nowa faktura
+      </p>
+    </div>
   </div>
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapMutations, mapState } from 'vuex'
+import Invoice from "../components/Invoice.vue"
 
 export default {
   name: "Home",
-  components: {},
+  components: {
+    Invoice,
+  },
   data () {
     return {
       filterMenu: false,
     }
   },
+  computed: {
+    ...mapState(['invoiceData'])
+  },
   methods: {
     ...mapMutations(['TOGGLE_INVOICE']),
     newInvoice () {
-        this.TOGGLE_INVOICE();
+      this.TOGGLE_INVOICE()
     },
     toggleFilterMenu () {
       this.filterMenu = !this.filterMenu
-    }
+    },
   }
 }
 </script>

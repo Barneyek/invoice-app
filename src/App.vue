@@ -18,7 +18,7 @@
     </div>
     <div
       v-else
-      class="flex flex-col text-white justify-center items-center h-screen  "
+      class="flex flex-col text-white justify-center items-center h-screen"
     >
       <h2 class="font-bold text-xl">
         Sorry, this app is not supported on Mobile Devices

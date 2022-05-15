@@ -382,6 +382,7 @@ export default {
       paymentDueDate: null,
       productDescription: null,
       invoicePending: null,
+      invoicePaid: null,
       invoiceDraft: null,
       invoiceItemList: [],
       invoiceTotal: 0
