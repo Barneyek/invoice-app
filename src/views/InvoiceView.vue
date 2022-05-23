@@ -50,7 +50,7 @@
       <div class="flex flex-1 justify-end gap-2">
         <button
           class="dark-purple py-3 px-6 text-white"
-          @click="toggleEditInvoice(currentInvoice.docId)"
+          @click="toggleEditInvoice"
         >
           Edytuj
         </button>
@@ -199,22 +199,30 @@ export default {
       currentInvoice: null,
     }
   },
+  computed: {
+    ...mapState(['currentInvoiceArray', 'editInvoice']),
+  },
+  watch: {
+    editInvoice() {
+      if (!this.editInvoice) {
+        this.currentInvoice = this.currentInvoiceArray[0]
+      }
+    }
+  },
   created () {
     this.getCurrentInvoice()
   },
   methods: {
-    ...mapMutations(['SET_CURRENT_INVOICE']),
+    ...mapMutations(['SET_CURRENT_INVOICE', 'TOGGLE_EDIT_INVOICE', "TOGGLE_INVOICE"]),
     getCurrentInvoice () {
       this.SET_CURRENT_INVOICE(this.$route.params.invoiceId)
       this.currentInvoice = this.currentInvoiceArray[0]
-    }
+    },
+    toggleEditInvoice () {
+      this.TOGGLE_EDIT_INVOICE()
+      this.TOGGLE_INVOICE()
+    },
   },
-  computed: {
-    ...mapState(['currentInvoiceArray']),
-  }
+
 }
 </script>
-
-<style scoped>
-
-</style>
