@@ -8,28 +8,30 @@
       class="relative p-14 w-full bg-[#141625] text-white border-r border-white  max-w-[700px]"
       @submit.prevent="submitForm"
     >
-      <Loading v-show="loading"/>
+      <Loading v-show="loading" />
       <h1
         v-if="!editInvoice"
         class="text-3xl font-bold mb-5 text-white"
       >
-        New Invoice
+        Nowa faktura
       </h1>
       <h1
         v-else
         class="text-3xl font-bold mb-5 text-white"
       >
-        Edit Invoice
+        Edytuj fakturę
       </h1>
       <div class="bill-form flex flex-col">
         <h4 class="text-[#7c5dfa] text-sm mb-3">
-          Bill Form
+          Dane od:
         </h4>
         <div class="input mb-6 flex flex-col">
           <label
             class="text-xs mb-1"
             for="billerStreetAddress"
-          >Street Address:</label>
+          >
+            Ulica
+          </label>
           <input
             id="billerStreetAddress"
             v-model="billerStreetAddress"
@@ -46,7 +48,7 @@
               class="text-xs mb-1"
               for="billerCity"
             >
-              Biller City:
+              Miasto
             </label>
             <input
               id="billerCity"
@@ -61,7 +63,7 @@
               class="text-xs mb-1"
               for="billerZipCode"
             >
-              Biller Zip Code:
+              Kod pocztowy
             </label>
             <input
               id="billerZipCode"
@@ -76,7 +78,7 @@
               class="text-xs mb-1"
               for="billerCountry"
             >
-              Biller Country:
+              Państwo
             </label>
             <input
               id="billerCountry"
@@ -91,14 +93,14 @@
         <!-- Bill To-->
         <div class="bill-to mb-12 flex flex-col">
           <h4 class="text-[#7c5dfa] text-sm mb-3">
-            Bill to
+            Dane klienta:
           </h4>
           <div class="input mb-6 flex flex-col">
             <label
               class="text-xs mb-1"
               for="clientName"
             >
-              Client name:
+              Imię
             </label>
             <input
               id="clientName"
@@ -113,7 +115,7 @@
               class="text-xs mb-1"
               for="clientEmail"
             >
-              Client e-mail:
+              Adres e-mail
             </label>
             <input
               id="clientEmail"
@@ -128,7 +130,7 @@
               class="text-xs mb-1"
               for="clientStreetAddress"
             >
-              Client street Address:
+              Ulica
             </label>
             <input
               id="clientStreetAddress"
@@ -144,7 +146,7 @@
                 class="text-xs mb-1"
                 for="clientCity"
               >
-                Client city:
+                Miasto
               </label>
               <input
                 id="clientCity"
@@ -159,7 +161,7 @@
                 class="text-xs mb-1"
                 for="clientZipCode"
               >
-                Client zip code:
+                Kod pocztowy
               </label>
               <input
                 id="clientZipCode"
@@ -174,7 +176,7 @@
                 class="text-xs mb-1"
                 for="clientCountry"
               >
-                Client country:
+                Państwo
               </label>
               <input
                 id="clientCountry"
@@ -195,7 +197,7 @@
                 class="text-xs mb-1"
                 for="invoiceDate"
               >
-                Invoice Date
+                Data faktury
               </label>
               <input
                 id="invoiceDate"
@@ -210,7 +212,7 @@
                 class="text-xs mb-1"
                 for="paymentDueDate"
               >
-                Payment Due date:
+                Termin płatności
               </label>
               <input
                 id="paymentDueDate"
@@ -226,7 +228,7 @@
               class="text-xs mb-1"
               for="paymentTerms"
             >
-              Payment Terms:
+              Czas zapłaty
             </label>
             <select
               id="paymentTerms"
@@ -235,10 +237,10 @@
               type="text"
             >
               <option value="30">
-                30 days
+                30 dni
               </option>
               <option value="60">
-                60 days
+                60 dni
               </option>
             </select>
           </div>
@@ -247,7 +249,7 @@
               class="text-xs mb-1"
               for="productDescription"
             >
-              Product Description:
+              Opis produktów:
             </label>
             <input
               id="productDescription"
@@ -258,21 +260,21 @@
           </div>
           <div class="work-items">
             <h3 class="mb-3 text-xl font-bold text-[#777f98]">
-              Item List
+              Lista produktów
             </h3>
             <table class="item-list w-full">
               <tr class="table-heading mb-4 flex gap-4 text-xs">
                 <th class="item-name flex basis-1/2 text-left">
-                  Item Name
+                  Nazwa przedmiotu
                 </th>
                 <th class="qty basis-[10%] text-left">
-                  Qty
+                  Ilość
                 </th>
                 <th class="price basis-[20%] text-left">
-                  Price
+                  Cena za szt
                 </th>
                 <th class="total basis-[20%] items-center text-left">
-                  Total
+                  Razem
                 </th>
               </tr>
               <tr
@@ -302,7 +304,7 @@
                   >
                 </td>
                 <td class="total basis-[20%] flex items-center">
-                  ${{ (item.total = item.qty * item.price) }}
+                  {{ (item.total = item.qty * item.price) }} zł
                 </td>
                 <img
                   src="../assets/icon-delete.svg"
@@ -321,30 +323,30 @@
                 alt="icon"
                 class="mr-1"
               >
-              Add New Item
+              Dodaj nowy przedmiot
             </div>
           </div>
         </div>
 
         <!-- Save/Exit-->
-        <div class="save flex mt-16">
-          <div class="left flex flex-1">
+        <div class="flex mt-16">
+          <div class="flex flex-1">
             <button
               type="button"
               class="bg-[#ec5757] py-4 px-6"
               @click="closeInvoice"
             >
-              Cancel
+              Anuluj
             </button>
           </div>
-          <div class="right flex gap-3">
+          <div class="flex gap-3">
             <button
               v-if="!editInvoice"
               type="submit"
               class="dark-purple py-4 px-6 rounded-2xl bg"
               @click="saveDraft"
             >
-              Save Draft
+              Zapisz szkic
             </button>
             <button
               v-if="!editInvoice"
@@ -352,7 +354,7 @@
               class="bg-[#7c5dfa] py-4 px-6"
               @click="publishInvoice"
             >
-              Create Invoice
+              Stwórz fakturę
             </button>
             <button
               v-if="editInvoice"
@@ -360,7 +362,7 @@
               class="bg-[#7c5dfa] py-4 px-6"
               @click="publishInvoice"
             >
-              Update Invoice
+              Aktualizuj
             </button>
           </div>
         </div>
@@ -453,7 +455,7 @@ export default {
   },
   methods: {
     ...mapMutations(['TOGGLE_INVOICE', 'TOGGLE_MODAL', 'TOGGLE_EDIT_INVOICE']),
-    ...mapActions(['UPDATE_INVOICE']),
+    ...mapActions(['UPDATE_INVOICE', 'GET_INVOICES']),
     checkClick (e) {
       if (e.target === this.$refs.invoiceWrap) {
         this.TOGGLE_MODAL()
@@ -525,6 +527,7 @@ export default {
       })
       this.loading = false
       this.TOGGLE_INVOICE()
+      this.GET_INVOICES()
     },
     async updateInvoice () {
       if (this.invoiceItemList.length <= 0) {

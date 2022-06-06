@@ -24,7 +24,7 @@
           <div class="relative">
             <span
               v-if="currentInvoice.invoicePaid"
-              class="flex-1 text-xs bg-[#46393c] text-[#ffb23f] text-center min-w-[100px] pl-2 block py-1 rounded-lg before:content-[''] before:w-2 before:h-2 before:bg-[#ffb23f] before:absolute before:top-1/2 before:translate-y-[-50%] before:left-[10px] before:rounded-full"
+              class="flex-1 text-xs bg-[#293840] text-[#white] text-center min-w-[100px] pl-2 block py-1 rounded-lg before:content-[''] before:w-2 before:h-2 before:bg-[#40d640] before:absolute before:top-1/2 before:translate-y-[-50%] before:left-[10px] before:rounded-full"
             >
               Opłacona
             </span>
@@ -32,7 +32,7 @@
           <div class="relative">
             <span
               v-if="currentInvoice.invoiceDraft"
-              class="flex-1 text-xs bg-[#46393c] text-[#ffb23f] text-center min-w-[70px] pl-2 block py-1 rounded-lg before:content-[''] before:w-2 before:h-2 before:bg-[#ffb23f] before:absolute before:top-1/2 before:translate-y-[-50%] before:left-[10px] before:rounded-full"
+              class="flex-1 text-xs bg-[#35394c] text-[white] text-center min-w-[70px] pl-5 pr-2 block py-1 rounded-lg before:content-[''] before:w-2 before:h-2 before:bg-[white] before:absolute before:top-1/2 before:translate-y-[-50%] before:left-[10px] before:rounded-full"
             >
               Szkic
             </span>
@@ -69,8 +69,8 @@
         </button>
         <button
           v-if="currentInvoice.invoiceDraft || currentInvoice.invoicePaid"
-          @class="orange"
-          @click="updateStatusToPending"
+          class="orange bg-[#ff8f00] px-3"
+          @click="updateStatusToPending(currentInvoice.docId)"
         >
           Oczekiwanie na płatność
         </button>
@@ -154,7 +154,7 @@
               Cena
             </p>
             <p class="text-xs text-[#dfe3fa] flex-1 text-right">
-              Total
+              Wszystkich
             </p>
           </div>
           <div
@@ -214,7 +214,7 @@ export default {
   },
   methods: {
     ...mapMutations(['SET_CURRENT_INVOICE', 'TOGGLE_EDIT_INVOICE', "TOGGLE_INVOICE"]),
-    ...mapActions(['DELETE_INVOICE']),
+    ...mapActions(['DELETE_INVOICE', 'UPDATE_STATUS_TO_PENDING', 'UPDATE_STATUS_TO_PAID']),
     getCurrentInvoice () {
       this.SET_CURRENT_INVOICE(this.$route.params.invoiceId)
       this.currentInvoice = this.currentInvoiceArray[0]
@@ -226,8 +226,13 @@ export default {
     async deleteInvoice(docId) {
       await this.DELETE_INVOICE(docId)
       this.$router.push({name: 'Home' })
-    }
+    },
+    updateStatusToPaid(docId) {
+      this.UPDATE_STATUS_TO_PAID(docId)
+    },
+    updateStatusToPending(docId) {
+      this.UPDATE_STATUS_TO_PENDING(docId)
+    },
   },
-
 }
 </script>

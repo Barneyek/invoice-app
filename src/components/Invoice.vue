@@ -17,21 +17,36 @@
           class="flex"
           :class="{paid: invoice.invoicePaid, draft : invoice.invoiceDraft, pending : invoice.invoicePending}"
         >
-          <span
-            v-if="invoice.invoicePaid"
-            class="flex-1 text-xs text-xs bg-[#46393c] text-[#ffb23f] px-4 py-1 rounded-lg"
-          >Paid</span>
-          <span
-            v-if="invoice.invoiceDraft"
-            class="flex-1 text-xs text-xs bg-[#46393c] text-[#ffb23f] px-4 py-1 rounded-lg"
-          >Draft</span>
-          <span
-            v-if="invoice.invoicePending"
-            class="flex-1 text-xs bg-[#46393c] text-[#ffb23f] px-4 py-1 rounded-lg"
-          >Pending</span>
+          <div class="relative">
+            <span
+              v-if="invoice.invoicePaid"
+              class="flex-1 text-xs text-xs bg-[#293840] min-w-[100px] text-center text-[white] pl-2 block py-1 rounded-lg before:content-[''] before:w-2 before:h-2 before:bg-[#40d640] before:absolute before:top-1/2 before:translate-y-[-50%] before:left-[10px] before:rounded-full"
+            >
+              Opłacona
+            </span>
+          </div>
+          <div class="relative">
+            <span
+              v-if="invoice.invoiceDraft"
+              class="flex-1 text-xs bg-[#35394c] text-[white] text-center min-w-[70px] pl-5 pr-2 block py-1 rounded-lg before:content-[''] before:w-2 before:h-2 before:bg-[white] before:absolute before:top-1/2 before:translate-y-[-50%] before:left-[10px] before:rounded-full"
+            >
+              Szkic
+            </span>
+          </div>
+          <div class="relative">
+            <span
+              v-if="invoice.invoicePending"
+              class="flex-1 text-xs bg-[#46393c] text-[#ffb23f] min-w-[90px] block text-center pl-2 py-1 rounded-lg before:content-[''] before:w-2 before:h-2 before:bg-[#ffb23f] before:absolute before:top-1/2 before:translate-y-[-50%] before:left-[10px] before:rounded-full"
+            >
+              Oczekuje
+            </span>
+          </div>
         </div>
         <div>
-          <img src="../assets/icon-arrow-right.svg" alt="" />
+          <img
+            src="../assets/icon-arrow-right.svg"
+            alt="icon"
+          >
         </div>
       </div>
     </router-link>
