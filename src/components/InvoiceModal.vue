@@ -343,7 +343,7 @@
             <button
               v-if="!editInvoice"
               type="submit"
-              class="dark-purple py-4 px-6 rounded-2xl bg"
+              class="bg-[#252945] py-4 px-6 rounded-2xl bg"
               @click="saveDraft"
             >
               Zapisz szkic

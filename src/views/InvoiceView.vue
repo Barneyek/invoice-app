@@ -49,7 +49,7 @@
       </div>
       <div class="flex flex-1 justify-end gap-2">
         <button
-          class="dark-purple py-3 px-6 text-white"
+          class="bg-[#252945] py-3 px-6 text-white"
           @click="toggleEditInvoice"
         >
           Edytuj

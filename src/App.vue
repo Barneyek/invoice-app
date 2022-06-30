@@ -1,17 +1,14 @@
 <template>
-  <div
-    v-if="invoicesLoaded"
-    class="flex flex-col md:flex-row min-h-screen bg-[#141625]"
-  >
+  <div class="flex flex-col md:flex-row min-h-screen bg-[#141625]">
     <div
       v-if="!mobile"
       class="flex w-full"
     >
-      <Navigation />
+      <Navigation v-if="!route.meta?.noUi" />
       <div class="relative p-5 flex-1">
-        <Modal v-if="modalActive" />
+        <Modal v-if="modalActive && !route.meta?.noUi" />
         <transition name="invoice">
-          <InvoiceModal v-if="invoiceModal" />
+          <InvoiceModal v-if="invoiceModal && !route.meta?.noUi" />
         </transition>
         <router-view />
       </div>
@@ -34,6 +31,7 @@ import { mapState, mapActions } from 'vuex'
 import Navigation from "./components/Navigation.vue"
 import InvoiceModal from "./components/InvoiceModal.vue"
 import Modal from "./components/partials/Modal.vue"
+import { useRoute } from 'vue-router'
 
 export default {
   components: {
@@ -41,10 +39,12 @@ export default {
     InvoiceModal,
     Modal
   },
-  data () {
+  setup () {
+    const route = useRoute()
     return {
       mobile: null,
-    }
+      route,
+    };
   },
   created () {
     this.GET_INVOICES()
