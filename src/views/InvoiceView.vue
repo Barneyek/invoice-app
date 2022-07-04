@@ -5,7 +5,7 @@
   >
     <router-link
       class="no-underline flex mb-8 items-center text-white text-xs"
-      :to="{name: 'Home' }"
+      :to="{name: 'Dashboard' }"
     >
       <img
         src="../assets/icon-arrow-left.svg"

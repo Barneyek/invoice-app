@@ -15,14 +15,14 @@
               v-model="email"
               type="text"
               placeholder="Email"
-              class="w-full bg-[#1e2139] text-white rounded border-0 py-3 px-1  focus:outline-0"
+              class="w-full bg-[#1e2139] text-white rounded border-0 py-3 px-1 focus:outline-0"
             >
             <div class="relative">
               <input
                 :type="isPassVisible ? 'text' : 'password'"
                 v-model="password"
                 placeholder="Hasło"
-                class=" w-full bg-[#1e2139] text-white rounded border-0 py-3 px-1 focus:outline-0"
+                class="w-full bg-[#1e2139] text-white rounded border-0 py-3 px-1 focus:outline-0"
               >
               <svg
                 @click="isPassVisible = !isPassVisible"

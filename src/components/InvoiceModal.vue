@@ -37,12 +37,15 @@
             v-model="billerStreetAddress"
             class="w-full bg-[#1e2139] text-white rounded border-0 py-3 px-1 focus:outline-0"
             type="text"
-            required
           >
+          <span
+            v-if="v$.billerStreetAddress.$error"
+            class="text-[#f14f4f] text-xs pt-1"
+          >
+            {{ v$.billerStreetAddress.$errors[0].$message }}
+          </span>
         </div>
-
-        <!-- Bill From-->
-        <div class="localization-details mb-12 flex gap-4">
+        <div class="mb-12 flex gap-4">
           <div class="input mb-6 flex flex-col flex-1">
             <label
               class="text-xs mb-1"
@@ -55,8 +58,13 @@
               v-model="billerCity"
               class="w-full bg-[#1e2139] text-white rounded border-0 py-3 px-1 focus:outline-0"
               type="text"
-              required
             >
+            <span
+              v-if="v$.billerCity.$error"
+              class="text-[#f14f4f] text-xs pt-1"
+            >
+              {{ v$.billerCity.$errors[0].$message }}
+            </span>
           </div>
           <div class="input mb-6 flex flex-col flex-1">
             <label
@@ -70,8 +78,13 @@
               v-model="billerZipCode"
               class="w-full bg-[#1e2139] text-white rounded border-0 py-3 px-1 focus:outline-0"
               type="text"
-              required
             >
+            <span
+              v-if="v$.billerZipCode.$error"
+              class="text-[#f14f4f] text-xs pt-1"
+            >
+              {{ v$.billerZipCode.$errors[0].$message }}
+            </span>
           </div>
           <div class="input mb-6 flex flex-col flex-1">
             <label
@@ -85,8 +98,13 @@
               v-model="billerCountry"
               class="w-full bg-[#1e2139] text-white rounded border-0 py-3 px-1 focus:outline-0"
               type="text"
-              required
             >
+            <span
+              v-if="v$.billerCountry.$error"
+              class="text-[#f14f4f] text-xs pt-1"
+            >
+              {{ v$.billerCountry.$errors[0].$message }}
+            </span>
           </div>
         </div>
 
@@ -107,8 +125,13 @@
               v-model="clientName"
               class="w-full bg-[#1e2139] text-white rounded border-0 py-3 px-1 focus:outline-0"
               type="text"
-              required
             >
+            <span
+              v-if="v$.clientName.$error"
+              class="text-[#f14f4f] text-xs pt-1"
+            >
+              {{ v$.clientName.$errors[0].$message }}
+            </span>
           </div>
           <div class="input mb-6 flex flex-col">
             <label
@@ -122,8 +145,13 @@
               v-model="clientEmail"
               class="w-full bg-[#1e2139] text-white rounded border-0 py-3 px-1 focus:outline-0"
               type="text"
-              required
             >
+            <span
+              v-if="v$.clientEmail.$error"
+              class="text-[#f14f4f] text-xs pt-1"
+            >
+              {{ v$.clientEmail.$errors[0].$message }}
+            </span>
           </div>
           <div class="input mb-6 flex flex-col">
             <label
@@ -137,8 +165,13 @@
               v-model="clientStreetAddress"
               class="w-full bg-[#1e2139] text-white rounded border-0 py-3 px-1 focus:outline-0"
               type="text"
-              required
             >
+            <span
+              v-if="v$.clientStreetAddress.$error"
+              class="text-[#f14f4f] text-xs pt-1"
+            >
+              {{ v$.clientStreetAddress.$errors[0].$message }}
+            </span>
           </div>
           <div class="localization-details flex gap-4">
             <div class="input mb-6 flex flex-col flex-1">
@@ -153,8 +186,13 @@
                 v-model="clientCity"
                 class="w-full bg-[#1e2139] text-white rounded border-0 py-3 px-1 focus:outline-0"
                 type="text"
-                required
               >
+              <span
+                v-if="v$.clientCity.$error"
+                class="text-[#f14f4f] text-xs pt-1"
+              >
+                {{ v$.clientCity.$errors[0].$message }}
+              </span>
             </div>
             <div class="input mb-6 flex flex-col flex-1">
               <label
@@ -168,8 +206,13 @@
                 v-model="clientZipCode"
                 class="w-full bg-[#1e2139] text-white rounded border-0 py-3 px-1 focus:outline-0"
                 type="text"
-                required
               >
+              <span
+                v-if="v$.clientZipCode.$error"
+                class="text-[#f14f4f] text-xs pt-1"
+              >
+                {{ v$.clientZipCode.$errors[0].$message }}
+              </span>
             </div>
             <div class="input mb-6 flex flex-col flex-1">
               <label
@@ -183,8 +226,13 @@
                 v-model="clientCountry"
                 class="w-full bg-[#1e2139] text-white rounded border-0 py-3 px-1 focus:outline-0"
                 type="text"
-                required
               >
+              <span
+                v-if="v$.clientCountry.$error"
+                class="text-[#f14f4f] text-xs pt-1"
+              >
+                {{ v$.clientCountry.$errors[0].$message }}
+              </span>
             </div>
           </div>
         </div>
@@ -243,6 +291,12 @@
                 60 dni
               </option>
             </select>
+            <span
+              v-if="v$.paymentTerms.$error"
+              class="text-[#f14f4f] text-xs pt-1"
+            >
+              {{ v$.paymentTerms.$errors[0].$message }}
+            </span>
           </div>
           <div class="input mb-6 flex flex-col">
             <label
@@ -376,6 +430,8 @@ import db from '../firebase/firebaseInit'
 import { mapMutations, mapState, mapActions } from "vuex"
 import { uid } from 'uid'
 import Loading from "./partials/Loading.vue"
+import useValidate from '@vuelidate/core'
+import { required, email } from "@vuelidate/validators"
 
 export default {
   name: "InvoiceModal",
@@ -384,6 +440,7 @@ export default {
   },
   data () {
     return {
+      v$: useValidate(),
       loading: null,
       docId: null,
       dateOptions: {year: "numeric", month: "short", day: "numeric"},
@@ -453,6 +510,21 @@ export default {
       this.invoiceTotal = currentInvoice.invoiceTotal
     }
   },
+  validations () {
+    return {
+      billerStreetAddress: { required },
+      billerCity: { required },
+      billerZipCode: { required },
+      billerCountry: { required },
+      clientName: { required },
+      clientEmail: { required, email },
+      clientStreetAddress: { required },
+      clientCity: { required },
+      clientZipCode: { required },
+      clientCountry: { required },
+      paymentTerms: { required },
+    }
+  },
   methods: {
     ...mapMutations(['TOGGLE_INVOICE', 'TOGGLE_MODAL', 'TOGGLE_EDIT_INVOICE']),
     ...mapActions(['UPDATE_INVOICE', 'GET_INVOICES']),
@@ -497,6 +569,11 @@ export default {
         return
       }
 
+      const result = await this.v$.$validate()
+      if (!result) {
+        alert('Bład, sprawdź wszystkie pola')
+        return
+      }
       this.loading = true
       this.calInvoiceTotal()
 
