@@ -42,7 +42,7 @@
             v-if="v$.billerStreetAddress.$error"
             class="text-[#f14f4f] text-xs pt-1"
           >
-            {{ v$.billerStreetAddress.$errors[0].$message }}
+            To pole jest wymagane!
           </span>
         </div>
         <div class="mb-12 flex gap-4">
@@ -59,12 +59,20 @@
               class="w-full bg-[#1e2139] text-white rounded border-0 py-3 px-1 focus:outline-0"
               type="text"
             >
-            <span
-              v-if="v$.billerCity.$error"
-              class="text-[#f14f4f] text-xs pt-1"
-            >
-              {{ v$.billerCity.$errors[0].$message }}
-            </span>
+            <div v-if="v$.billerCity.$error">
+              <span
+                v-if="v$.billerCity.required.$invalid"
+                class="text-[#f14f4f] text-xs pt-1"
+              >
+                To pole jest wymagane!
+              </span>
+              <span
+                v-if="v$.billerCity.minLength.$invalid"
+                class="text-[#f14f4f] text-xs pt-1"
+              >
+                Minimalna długośc znaków musi być dłuższa niż 3!
+              </span>
+            </div>
           </div>
           <div class="input mb-6 flex flex-col flex-1">
             <label
@@ -83,7 +91,7 @@
               v-if="v$.billerZipCode.$error"
               class="text-[#f14f4f] text-xs pt-1"
             >
-              {{ v$.billerZipCode.$errors[0].$message }}
+              To pole jest wymagane!
             </span>
           </div>
           <div class="input mb-6 flex flex-col flex-1">
@@ -99,12 +107,20 @@
               class="w-full bg-[#1e2139] text-white rounded border-0 py-3 px-1 focus:outline-0"
               type="text"
             >
-            <span
-              v-if="v$.billerCountry.$error"
-              class="text-[#f14f4f] text-xs pt-1"
-            >
-              {{ v$.billerCountry.$errors[0].$message }}
-            </span>
+            <div v-if="v$.billerCountry.$error">
+              <span
+                v-if="v$.billerCountry.required.$invalid"
+                class="text-[#f14f4f] text-xs pt-1"
+              >
+                To pole jest wymagane!
+              </span>
+              <span
+                v-if="v$.billerCountry.minLength.$invalid"
+                class="text-[#f14f4f] text-xs pt-1"
+              >
+                Minimalna długośc znaków musi być dłuższa niż 3!
+              </span>
+            </div>
           </div>
         </div>
 
@@ -130,7 +146,7 @@
               v-if="v$.clientName.$error"
               class="text-[#f14f4f] text-xs pt-1"
             >
-              {{ v$.clientName.$errors[0].$message }}
+              To pole jest wymagane!
             </span>
           </div>
           <div class="input mb-6 flex flex-col">
@@ -146,12 +162,20 @@
               class="w-full bg-[#1e2139] text-white rounded border-0 py-3 px-1 focus:outline-0"
               type="text"
             >
-            <span
-              v-if="v$.clientEmail.$error"
-              class="text-[#f14f4f] text-xs pt-1"
-            >
-              {{ v$.clientEmail.$errors[0].$message }}
-            </span>
+            <div v-if="v$.clientEmail.$error">
+              <span
+                v-if="v$.clientEmail.required.$invalid"
+                class="text-[#f14f4f] text-xs pt-1"
+              >
+                To pole jest wymagane!
+              </span>
+              <span
+                v-if="v$.clientEmail.email.$invalid"
+                class="text-[#f14f4f] text-xs pt-1"
+              >
+                Niepoprawny adres email.
+              </span>
+            </div>
           </div>
           <div class="input mb-6 flex flex-col">
             <label
@@ -170,7 +194,7 @@
               v-if="v$.clientStreetAddress.$error"
               class="text-[#f14f4f] text-xs pt-1"
             >
-              {{ v$.clientStreetAddress.$errors[0].$message }}
+              To pole jest wymagane!
             </span>
           </div>
           <div class="localization-details flex gap-4">
@@ -187,12 +211,20 @@
                 class="w-full bg-[#1e2139] text-white rounded border-0 py-3 px-1 focus:outline-0"
                 type="text"
               >
-              <span
-                v-if="v$.clientCity.$error"
-                class="text-[#f14f4f] text-xs pt-1"
-              >
-                {{ v$.clientCity.$errors[0].$message }}
+              <div v-if="v$.clientCity.$error">
+                <span
+                  v-if="v$.clientCity.required.$invalid"
+                  class="text-[#f14f4f] text-xs pt-1"
+                >
+                  To pole jest wymagane!
+                </span>
+                <span
+                  v-if="v$.clientCity.minLength.$invalid"
+                  class="text-[#f14f4f] text-xs pt-1"
+                >
+                Minimalna długośc znaków musi być dłuższa niż 3!
               </span>
+              </div>
             </div>
             <div class="input mb-6 flex flex-col flex-1">
               <label
@@ -211,7 +243,7 @@
                 v-if="v$.clientZipCode.$error"
                 class="text-[#f14f4f] text-xs pt-1"
               >
-                {{ v$.clientZipCode.$errors[0].$message }}
+                              To pole jest wymagane!
               </span>
             </div>
             <div class="input mb-6 flex flex-col flex-1">
@@ -227,12 +259,20 @@
                 class="w-full bg-[#1e2139] text-white rounded border-0 py-3 px-1 focus:outline-0"
                 type="text"
               >
-              <span
-                v-if="v$.clientCountry.$error"
-                class="text-[#f14f4f] text-xs pt-1"
-              >
-                {{ v$.clientCountry.$errors[0].$message }}
+              <div v-if="v$.clientCountry.$error">
+                <span
+                  v-if="v$.clientCountry.required.$invalid"
+                  class="text-[#f14f4f] text-xs pt-1"
+                >
+                  To pole jest wymagane!
+                </span>
+                <span
+                  v-if="v$.clientCountry.minLength.$invalid"
+                  class="text-[#f14f4f] text-xs pt-1"
+                >
+                Minimalna długośc znaków musi być dłuższa niż 3!
               </span>
+              </div>
             </div>
           </div>
         </div>
@@ -295,7 +335,7 @@
               v-if="v$.paymentTerms.$error"
               class="text-[#f14f4f] text-xs pt-1"
             >
-              {{ v$.paymentTerms.$errors[0].$message }}
+              To pole jest wymagane!
             </span>
           </div>
           <div class="input mb-6 flex flex-col">
@@ -431,7 +471,7 @@ import { mapMutations, mapState, mapActions } from "vuex"
 import { uid } from 'uid'
 import Loading from "./partials/Loading.vue"
 import useValidate from '@vuelidate/core'
-import { required, email } from "@vuelidate/validators"
+import { required, email, minLength } from "@vuelidate/validators"
 
 export default {
   name: "InvoiceModal",
@@ -513,15 +553,15 @@ export default {
   validations () {
     return {
       billerStreetAddress: { required },
-      billerCity: { required },
+      billerCity: { required, minLength: minLength(3) },
       billerZipCode: { required },
-      billerCountry: { required },
+      billerCountry: { required, minLength: minLength(3)},
       clientName: { required },
       clientEmail: { required, email },
       clientStreetAddress: { required },
-      clientCity: { required },
+      clientCity: { required, minLength: minLength(3) },
       clientZipCode: { required },
-      clientCountry: { required },
+      clientCountry: { required, minLength: minLength(3) },
       paymentTerms: { required },
     }
   },
