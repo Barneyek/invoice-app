@@ -77,37 +77,6 @@ export default {
   font-family: "Poppins", sans-serif;
 }
 
-button,
-.button {
-  cursor: pointer;
-  padding: 16px 24px;
-  border-radius: 30px;
-  border: none;
-  font-size: 12px;
-  margin-right: 8px;
-  color: #fff;
-}
-
-.dark-purple {
-  background-color: #252945;
-}
-
-.red {
-  background-color: #ec5757;
-}
-
-.purple {
-  background-color: #7c5dfa;
-}
-
-.green {
-  background-color: #33d69f;
-}
-
-.orange {
-  background-color: #ff8f00;
-}
-
 .invoice-enter-active,
 .invoice-leave-active {
   transition: 0.8s ease all;

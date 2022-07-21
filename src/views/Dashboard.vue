@@ -49,7 +49,7 @@
           </ul>
         </div>
         <div
-          class="button flex items-center py-2 px-3 bg-[#7c5dfa] rounded-3xl"
+          class="mr-3 text-sm text-white flex items-center py-2 px-3 bg-[#7c5dfa] rounded-3xl pointer"
           @click="newInvoice"
         >
           <div class="inner-button flex justify-center items-center mr-1 rounded-full p-2 bg-white">

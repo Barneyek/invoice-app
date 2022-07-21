@@ -55,7 +55,7 @@
           Edytuj
         </button>
         <button
-          class="red py-3 px-6 text-white"
+          class="bg-[#ec5757] py-3 px-6 text-white"
           @click="deleteInvoice(currentInvoice.docId)"
         >
           Usuń

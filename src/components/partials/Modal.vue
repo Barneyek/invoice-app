@@ -6,13 +6,13 @@
       </p>
       <div class="flex justify-between mt-7">
         <button
-          class="flex-1 purple py-3 mr-3"
+          class="flex-1 bg-[#7c5dfa] py-3 mr-3"
           @click="closeModal"
         >
           Powrót
         </button>
         <button
-          class="flex-1 red py-3"
+          class="flex-1 bg-[#ec5757] py-3"
           @click="closeInvoice"
         >
           Zamknij
