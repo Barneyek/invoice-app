@@ -54,12 +54,6 @@
           </div>
           <div class="flex flex-col gap-y-3 ">
             <button
-              class="bg-[#252945] text-base py-2"
-              @click="signWithGoogle"
-            >
-              Zaloguj się za pomocą Google
-            </button>
-            <button
               class="bg-[#7c5dfa] text-base py-2"
 
               @click="login"
@@ -174,10 +168,6 @@ const login = () => {
       }
       console.log(error.message)
     })
-}
-
-const signWithGoogle = () => {
-
 }
 
 </script>
