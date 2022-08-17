@@ -63,7 +63,7 @@
         </div>
       </div>
     </div>
-    <div v-if="invoiceData.length > 0">
+    <div v-if="invoiceData.length > 0 && invoicesLoaded">
       <Invoice
         v-for="(invoice, key) in filteredData"
         :key="key"
@@ -71,7 +71,7 @@
       />
     </div>
     <div
-      v-else
+      v-else-if="invoiceData.length === 0 && invoicesLoaded"
       class="flex flex-col items-center mt-16"
     >
       <img
@@ -86,18 +86,23 @@
         Stwórz nową fakturę klikając w przycisk Nowa faktura
       </p>
     </div>
+    <div v-else-if="invoiceData.length > 0 && !invoicesLoaded">
+      <Loading />
+    </div>
   </div>
 </template>
 
 <script>
 
 import Invoice from  "../components/Invoice.vue"
-import { mapMutations, mapState } from "vuex"
+import Loading from  "../components/partials/Loading.vue"
+import { mapActions, mapMutations, mapState } from "vuex"
 
 export default {
   name: 'Dashboard',
   components: {
     Invoice,
+    Loading,
   },
   data () {
     return {
@@ -106,7 +111,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['invoiceData']),
+    ...mapState(['invoiceData','invoicesLoaded']),
 
     filteredData () {
       return this.invoiceData.filter(invoice => {
@@ -123,7 +128,11 @@ export default {
       })
     }
   },
+  created () {
+    this.GET_INVOICES()
+  },
   methods: {
+    ...mapActions(['GET_INVOICES']),
     ...mapMutations(['TOGGLE_INVOICE']),
     newInvoice () {
       this.TOGGLE_INVOICE()
@@ -136,6 +145,7 @@ export default {
         this.filteredInvoice = null
         return
       }
+
       this.filteredInvoice = e.target.innerText
     }
   }

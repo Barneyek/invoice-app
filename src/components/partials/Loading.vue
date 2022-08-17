@@ -13,17 +13,7 @@ export default {
 <style scoped>
 .loader {
   border-top-color: #7c5dfa;
-  -webkit-animation: spinner 1.5s linear infinite;
   animation: spinner 1.5s linear infinite;
-}
-
-@-webkit-keyframes spinner {
-  0% {
-    -webkit-transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-  }
 }
 
 @keyframes spinner {

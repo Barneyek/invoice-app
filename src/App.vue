@@ -18,16 +18,16 @@
       class="flex flex-col text-white justify-center items-center h-screen"
     >
       <h2 class="font-bold text-xl">
-        Sorry, this app is not supported on Mobile Devices
+        Przepraszamy, ta aplikacja nie wspiera urządzeń mobilnych
       </h2>
       <p class="mt-3">
-        To use this app, please use a computer or Tablet
+        Aby skorzystać wejdź na stronę na innym urządzeniu
       </p>
     </div>
   </div>
 </template>
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 import Navigation from "./components/Navigation.vue"
 import InvoiceModal from "./components/InvoiceModal.vue"
 import Modal from "./components/partials/Modal.vue"
@@ -47,7 +47,6 @@ export default {
     };
   },
   created () {
-    this.GET_INVOICES()
     this.checkScreen()
     window.addEventListener("resize", this.checkScreen)
   },
@@ -55,7 +54,6 @@ export default {
     ...mapState(['invoiceModal', 'modalActive', 'invoicesLoaded'])
   },
   methods: {
-    ...mapActions(['GET_INVOICES']),
     checkScreen () {
       const windowWidth = window.innerWidth
       if (windowWidth <= 750) {
