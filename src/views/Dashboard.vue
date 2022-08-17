@@ -63,7 +63,7 @@
         </div>
       </div>
     </div>
-    <div v-if="invoiceData.length > 0 && invoicesLoaded">
+    <div v-if="filteredData.length > 0 && loaded">
       <Invoice
         v-for="(invoice, key) in filteredData"
         :key="key"
@@ -71,7 +71,7 @@
       />
     </div>
     <div
-      v-else-if="invoiceData.length === 0 && invoicesLoaded"
+      v-else-if="filteredData.length === 0 && loaded"
       class="flex flex-col items-center mt-16"
     >
       <img
@@ -86,16 +86,16 @@
         Stwórz nową fakturę klikając w przycisk Nowa faktura
       </p>
     </div>
-    <div v-else-if="invoiceData.length > 0 && !invoicesLoaded">
-      <Loading />
+    <div v-else-if="filteredData.length === 0 && !loaded">
+      <Loading/>
     </div>
   </div>
 </template>
 
 <script>
 
-import Invoice from  "../components/Invoice.vue"
-import Loading from  "../components/partials/Loading.vue"
+import Invoice from "../components/Invoice.vue"
+import Loading from "../components/partials/Loading.vue"
 import { mapActions, mapMutations, mapState } from "vuex"
 
 export default {
@@ -108,11 +108,11 @@ export default {
     return {
       filteredInvoice: null,
       filterMenu: false,
+      loaded: false
     }
   },
   computed: {
-    ...mapState(['invoiceData','invoicesLoaded']),
-
+    ...mapState(['invoiceData', 'invoicesLoaded']),
     filteredData () {
       return this.invoiceData.filter(invoice => {
         if (this.filteredInvoice === "Szkic") {
@@ -126,6 +126,13 @@ export default {
         }
         return invoice
       })
+    }
+  },
+  watch: {
+    filteredData (newDataLength, oldDataLength) {
+      if (oldDataLength.length === 0 && newDataLength.length !== 0) {
+        this.loaded = true
+      }
     }
   },
   created () {
