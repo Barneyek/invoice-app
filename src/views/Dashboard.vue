@@ -63,11 +63,18 @@
         </div>
       </div>
     </div>
-    <div v-if="filteredData.length > 0 && loaded">
+    <div v-if="invoiceData.length > 0 && loaded">
       <Invoice
-        v-for="(invoice, key) in filteredData"
+        v-for="(invoice, key) in visibleData"
         :key="key"
         :invoice="invoice"
+        :currentpage="currentPage"
+      />
+      <pagination
+        :todos="visibleData"
+        :current-page="currentPage"
+        :page-size="pageSize"
+        @page:update="updatePage"
       />
     </div>
     <div
@@ -87,7 +94,7 @@
       </p>
     </div>
     <div v-else-if="filteredData.length === 0 && !loaded">
-      <Loading/>
+      <Loading />
     </div>
   </div>
 </template>
@@ -96,32 +103,37 @@
 
 import Invoice from "../components/Invoice.vue"
 import Loading from "../components/partials/Loading.vue"
+import Pagination from '../components/partials/Pagination.vue'
 import { mapActions, mapMutations, mapState } from "vuex"
 
 export default {
   name: 'Dashboard',
   components: {
     Invoice,
+    Pagination,
     Loading,
   },
   data () {
     return {
       filteredInvoice: null,
       filterMenu: false,
-      loaded: false
+      loaded: false,
+      pageSize: 2,
+      currentPage: 0,
+      visibleData: [],
     }
   },
   computed: {
-    ...mapState(['invoiceData', 'invoicesLoaded']),
+    ...mapState(['invoiceData']),
     filteredData () {
       return this.invoiceData.filter(invoice => {
-        if (this.filteredInvoice === "Szkic") {
+        if (this.visibleData === "Szkic") {
           return invoice.invoiceDraft === true
         }
-        if (this.filteredInvoice === "Oczekiwanie") {
+        if (this.visibleData === "Oczekiwanie") {
           return invoice.invoicePending === true
         }
-        if (this.filteredInvoice === "Opłacone") {
+        if (this.visibleData === "Opłacone") {
           return invoice.invoicePaid === true
         }
         return invoice
@@ -132,6 +144,7 @@ export default {
     filteredData (newDataLength, oldDataLength) {
       if (oldDataLength.length === 0 && newDataLength.length !== 0) {
         this.loaded = true
+        this.updateVisibleInvoices()
       }
     }
   },
@@ -144,16 +157,31 @@ export default {
     newInvoice () {
       this.TOGGLE_INVOICE()
     },
+    updatePage(pageNumber) {
+      this.currentPage = pageNumber;
+      this.updateVisibleInvoices()
+    },
     toggleFilterMenu () {
       this.filterMenu = !this.filterMenu
     },
     filteredInvoices (e) {
       if (e.target.innerText === 'Wyczyść') {
-        this.filteredInvoice = null
+        this.visibleData = null
         return
       }
+      this.visibleData = e.target.innerText
+      if (e.target.innerText === 'Wyczyść') {
+        this.filteredInvoice = null
+        return this.updateVisibleInvoices()
+      }
+      this.updateVisibleInvoices()
+    },
+    updateVisibleInvoices () {
+      this.visibleData = this.filteredData.slice(this.currentPage * this.pageSize, (this.currentPage * this.pageSize) + this.pageSize)
 
-      this.filteredInvoice = e.target.innerText
+      if (this.filteredData === 0 && this.currentPage > 0) {
+        this.updatePage(this.currentPage - 1)
+      }
     }
   }
 }
