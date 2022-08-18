@@ -1,7 +1,20 @@
-# Vue 3 + Vite
+#Invoice App
+An application designed to improve and test the skills of writing code in vue. The user can register, add, edit, delete invoices from the database.
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+##Technology stack
+* Vue 3 + Vite
+* Vuex
+* Firebase
+* Tailwind
 
-## Recommended IDE Setup
+##Available Scripts
+``` 
+Install dependencies
+npm install
 
-- [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)
+# serve with hot reload at localhost:3000
+npm run dev
+
+# build for production with minification
+npm run build
+```
