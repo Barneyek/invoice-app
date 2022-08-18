@@ -71,7 +71,7 @@
         :currentpage="currentPage"
       />
       <pagination
-        :todos="visibleData"
+        :data-to-paginate="filteredData"
         :current-page="currentPage"
         :page-size="pageSize"
         @page:update="updatePage"
@@ -120,6 +120,7 @@ export default {
       loaded: false,
       pageSize: 2,
       currentPage: 0,
+      cleanFilter: false,
       visibleData: [],
     }
   },
@@ -127,13 +128,16 @@ export default {
     ...mapState(['invoiceData']),
     filteredData () {
       return this.invoiceData.filter(invoice => {
-        if (this.visibleData === "Szkic") {
+        if (this.filteredInvoice === "Szkic") {
+          this.updateVisibleInvoices()
           return invoice.invoiceDraft === true
         }
-        if (this.visibleData === "Oczekiwanie") {
+        if (this.filteredInvoice === "Oczekiwanie") {
+          this.updateVisibleInvoices()
           return invoice.invoicePending === true
         }
-        if (this.visibleData === "Opłacone") {
+        if (this.filteredInvoice === "Opłacone") {
+          this.updateVisibleInvoices()
           return invoice.invoicePaid === true
         }
         return invoice
@@ -166,19 +170,21 @@ export default {
     },
     filteredInvoices (e) {
       if (e.target.innerText === 'Wyczyść') {
-        this.visibleData = null
+        this.cleanFilter = true
+        this.filteredInvoice = ''
+        this.updateVisibleInvoices()
         return
       }
-      this.visibleData = e.target.innerText
-      if (e.target.innerText === 'Wyczyść') {
-        this.filteredInvoice = null
-        return this.updateVisibleInvoices()
-      }
+      this.cleanFilter = false
+      this.filteredInvoice = e.target.innerText
       this.updateVisibleInvoices()
     },
     updateVisibleInvoices () {
-      this.visibleData = this.filteredData.slice(this.currentPage * this.pageSize, (this.currentPage * this.pageSize) + this.pageSize)
-
+      if (this.cleanFilter) {
+        this.visibleData = this.invoiceData.slice(this.currentPage * this.pageSize, (this.currentPage * this.pageSize) + this.pageSize)
+      } else {
+        this.visibleData = this.filteredData.slice(this.currentPage * this.pageSize, (this.currentPage * this.pageSize) + this.pageSize)
+      }
       if (this.filteredData === 0 && this.currentPage > 0) {
         this.updatePage(this.currentPage - 1)
       }
